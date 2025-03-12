@@ -1,0 +1,9 @@
+newspaper3k
+kafka-python-ng
+lxml_html_clean
+playwright
+dateparser
+dateparser
+requests
+beautifulsoup4
+nltk
