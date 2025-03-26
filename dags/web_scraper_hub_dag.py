@@ -53,17 +53,19 @@ def prepare_article(url, header):
     return article
 
 
-def prepare_for_kafka(country, source, title, text, summary, keywords, date, article_url, source_url):
+def prepare_for_kafka(country, source, title, text, summary, keywords, date, article_url):
+    language = "RU"
+    if country == "AZ":
+        language = "EN"
     return {
         "country": country,
         "source": source,
         "title": title,
         "text": text,
         "summary": summary,
-        "keywords": keywords,
         "date": date,
-        "article_url": article_url,
-        "source_url": source_url
+        "URL": article_url,
+        "language": language
     }
 
 
@@ -159,7 +161,7 @@ def fetch_news_from_source(source_config, **kwargs):
             
         # Отправляем в Kafka, только если есть заголовок и текст
         if article.title != "" and article.text != "":
-            news = prepare_for_kafka( country_code, article.authors, article.title, article.text, article.summary, article.keywords, str(target_date), url, base_url)
+            news = prepare_for_kafka( country_code, article.authors, article.title, article.text, article.summary, article.keywords, str(target_date), url)
             try:
                 producer.send("unclassified_news", value=news)
             except Exception as e:
