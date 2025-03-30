@@ -5,6 +5,7 @@
 from datetime import datetime
 import dateparser
 from utils.create_soup import create_soup
+from utils.preprocess_text import remove_html_tags
 from bs4 import BeautifulSoup
 import requests
 
@@ -51,6 +52,7 @@ def parse_tj_article(url, header):
     title = title_element.get_text(strip=True) if title_element else "Заголовок не найден"
     content_elements = soup.select("p.text-left, div[style*='text-align']")
     text = " ".join([element.get_text(strip=True) for element in content_elements if element.get_text(strip=True)])
+    text = remove_html_tags(text)
     return {
         "title": title,
         "text": text

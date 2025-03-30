@@ -6,6 +6,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 import dateparser
 from utils.create_soup import create_soup
+from utils.preprocess_text import remove_html_tags
 
 def get_kg_cb_links(url, header, target_date=None):
     if target_date is None:
@@ -60,6 +61,7 @@ def parse_kg_article(url, header):
     else:
         text = "Текст статьи не найден."
 
+    text = remove_html_tags(text)
     return {
         "title": title,
         "text": text
