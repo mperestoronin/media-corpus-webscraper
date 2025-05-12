@@ -125,7 +125,7 @@ dag = DAG(
     'web_scraper_hub_dag',
     default_args=default_args,
     description='Scrape news from various news sources',
-    schedule_interval='@daily',
+    schedule_interval='50 20 * * *', # т.к. в москве +3 по часам от utc
     catchup=False,
 )
 
